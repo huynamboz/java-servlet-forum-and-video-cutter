@@ -1,0 +1,137 @@
+@charset "ISO-8859-1";
+
+* {
+	box-sizing: border-box;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, p {
+	padding: 0;
+	margin: 0;
+}
+:root {
+	--white-primary: #ebeced;
+	--blue-primary: #5c7099;
+	--red-primary: #ff5353;
+	--gray-second: #adadad;
+	--gray-third: #dce7f5;
+	--yellow-primary: #ffcb00;
+	--blue-100: #2a7fd9;
+}
+
+input {
+	outline: none;
+	color:#adadad;
+}
+body {
+	background-color: #343a40;
+	color: #23497c;
+	padding: 0;
+	margin: 0;
+}
+
+.main {
+	width: 100%;
+	max-width: 1442px;
+	display: flex;
+	gap: 20px;
+}
+
+ul, li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	padding-inline-start: 0;
+}
+a {
+	color: inherit;
+	text-decoration: none;
+}
+.container-main {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	padding: 40px;
+	padding-top: 90px;
+}
+
+.header {
+	padding: 0 20px;
+	background-color: #5c7099;
+	position: fixed;
+	width: 100vw;
+	top: 0;
+	left: 0;
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	height: 56px;
+	align-items: center;
+}
+
+.header .nav-link__left {
+	display: flex;
+}
+
+.header .nav-link__right {
+	display: flex;
+}
+
+
+.post-type-review {
+	background-color: var(--red-primary);
+	padding: 4px 6px;
+	border-radius: 6px;
+	display: inline-block;
+	color: white;
+	font-weight: 400;
+	font-size: 14px;
+}
+
+.post-type-discuss {
+	background-color: var(--gray-third);
+	padding: 4px 6px;
+	border-radius: 6px;
+	display: inline-block;
+	color: var(--blue-primary);
+	border: 1px solid var(--blue-primary);
+	font-weight: 400;
+	font-size: 14px;
+}
+
+.post-type-question {
+	background-color: var(--yellow-primary);
+	padding: 4px 6px;
+	border-radius: 6px;
+	display: inline-block;
+	color: #000;
+	font-weight: 400;
+	font-size: 14px;
+}
+
+.post-type-sharing {
+	background-color: var(--blue-100);
+	padding: 4px 6px;
+	border-radius: 6px;
+	display: inline-block;
+	color: #fff;
+	font-weight: 400;
+	font-size: 14px;
+}
+
+.avatar{
+	width: 30px;
+	height: 30px;
+	min-width: 30px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.avatar-second{
+	width: 35px;
+	height: 35px;
+	min-width: 30px;
+	border-radius: 50%;
+	object-fit: cover;
+}
