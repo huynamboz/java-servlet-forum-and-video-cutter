@@ -15,5 +15,7 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="D:/OneDrive - The University of Technology/tailieu/Nam3/Ky1/cnweb/JSP/apache-tomcat-9.0.83/webapps/examples/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar"/>
 	<classpathentry kind="lib" path="D:/OneDrive - The University of Technology/tailieu/Nam3/Ky1/cnweb/JSP/apache-tomcat-9.0.83/webapps/examples/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar"/>
+	<classpathentry kind="lib" path="D:/OneDrive - The University of Technology/tailieu/Nam3/Ky1/cnweb/JSP/forum/jar_files/cloudinary-http44-1.36.0.jar"/>
+	<classpathentry kind="lib" path="D:/OneDrive - The University of Technology/tailieu/Nam3/Ky1/cnweb/JSP/forum/jar_files/cloudinary-core-1.36.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -8,6 +8,29 @@ public class Thread {
 	private String user_id;
 	private String category_id;
 	
+	public String lastname;
+	public String firstname;
+	public String avatar;
+	
+	private String createdAt;
+	
+	public void setCreatedAt(String v) {
+		this.createdAt = v;
+	}
+	
+	public String getCreatedAt() {
+		return this.createdAt;
+	}
+	public String getUser(String type) {
+		switch(type) {
+		case "name":
+			return this.firstname + " " + this.lastname;
+			
+		case "avatar":
+			return this.avatar;
+		}
+		return "";
+	}
 	public void setId(String id) {
 		this.id = id;
 	}

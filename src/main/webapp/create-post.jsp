@@ -66,7 +66,7 @@
 	<div>
 		<div class="header">
 			<div class="flex gap-2 items-center">
-				<p class="font-bold text-lg">FORUMZ</p>
+				<a href="/forum" class="font-bold text-lg">FORUMZ</a>
 				<div class="ml-5">
 					<p>Trang chủ</p>
 				</div>
@@ -97,7 +97,7 @@
 	
 	
 	
-		<div class="w-full bg-white h-[500px] max-w-[1240px] rounded-md p-3 flex flex-col">
+		<div class="w-full bg-white min-h-[500px] max-w-[1240px] rounded-md p-3 flex flex-col">
 			<h2 class="font-semibold block pb-2 text-xl border-b-[1px]">Đăng bài</h2>
 			
 			<form class="mt-2 flex-auto h-full flex flex-col" id="myForm" action="">

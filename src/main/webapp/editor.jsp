@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +32,7 @@
 
     <div class="header bg-[#5c7099] flex h-[56px] justify-between text-white mb-5 px-3">
       <div class="flex gap-2 items-center">
-        <p class="font-bold text-lg">FORUMZ</p>
+		    <a href="/forum" class="font-bold text-lg">FORUMZ</a>
         <div class="ml-5">
           <p>Trang chủ</p>
         </div>
@@ -58,9 +59,29 @@
 
 
 	
-
-	<div class="w-full flex flex-col items-center justify-center">
-    <p class="block text-3xl font-bold mb-5 text-[#f85a38]">VIDEO CUTTER✂️</p>
+<p class="block text-3xl font-bold mb-5 text-center text-[#f85a38]">VIDEO CUTTER✂️</p>
+	<div class="w-full flex gap-5 justify-center">
+    
+    <div class="flex flex-col h-full w-[350px] border-[1px] rounded-lg p-5 pt-2">
+    	<p class="block text-xl font-bold mb-5 text-center text-[#f85a38]">Danh sách xử lý</p>
+    	 <div class="flex flex-col gap-2">
+	    	 <c:forEach var="item" items="${myData}">
+	    	  <c:choose>
+				  <c:when test="${item.data == 'processing'}">
+				    <div class="flex items-center justify-center gap-1 w-full h-[45px] bg-[#f1f2f6]">
+				    <p>Đang xử lý</p>
+				    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path fill="currentColor" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path fill="currentColor" d="M12,4a8,8,0,0,1,7.89,6.7A1.53,1.53,0,0,0,21.38,12h0a1.5,1.5,0,0,0,1.48-1.75,11,11,0,0,0-21.72,0A1.5,1.5,0,0,0,2.62,12h0a1.53,1.53,0,0,0,1.49-1.3A8,8,0,0,1,12,4Z"><animateTransform attributeName="transform" dur="0.75s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></svg>
+				    </div>
+				  </c:when>
+				  <c:when test="${item.data != 'processing'}">
+				    <video controls src="${item.data}" class="bg-gray-100"></video>
+				  </c:when>
+				</c:choose>
+	         </c:forEach>
+    	 </div>
+    </div>
+    
+    
 		<div>
       <div class="relative w-[940px] h-[464px]">
         <div id="require-select" class="w-full h-full absolute top-0 left-0 bg-[#dce7f5] z-10 flex
@@ -81,10 +102,7 @@
           <div class="button bg-[#5c7099] w-fit text-white px-2 py-1 rounded-md" onClick="loopBetween()">Loop Between</div>
           <div class="button bg-[#5c7099] w-fit text-white px-2 py-1 rounded-md" onClick="getValues()">Get Arrow Values</div><br/>
        </div>
-       <div>
-        Start (seconds):<input type="text" value="2" id="Start">
-        End (seconds): <input type="text" value="5" id="End">
-       </div>
+       
        <form id="myForm" action.prevent="" method = "post"  class="flex flex-col gap-5">
         <input type="file" 
 	        class="button bg-[#5c7099] w-fit text-white px-2 py-1 rounded-md"
@@ -93,6 +111,10 @@
 	        accept="video/*" 
 	        onchange="changeFile()"
 	      >
+	      <div>
+	        Start (seconds):<input type="text" name="start" value="00:00" id="Start">
+	        End (seconds): <input type="text" name="end" value="00:00" id="End">
+	       </div>
 	     <button id="submit" class="bg-[#16b67c] text-white px-10 py-1 mt-4 rounded-md">PROCESS</button>
        </form>
        </div>
@@ -110,9 +132,10 @@
   	 console.log(btn);
   	 btn.onclick = async function(event) {
   		event.preventDefault();
+  		getValues()
   	    	console.log("submit")
   	    	var formData = new FormData(document.getElementById("myForm"));
-  			
+  			formData.append("user_id", "388c16bf-bf78-4988-9133-83a30b032c3d")
   	        // Thêm các trường không nằm trong form
   	        console.log(Array.from(formData));
 
@@ -125,8 +148,8 @@
  	        	    },
  	        	  );
 
-				alert('Đăng bài viết thành công!')
-				
+				alert('Đã đưa tiến trình xử lý vào hàng chờ thành công!')
+				location.reload();
  	        	  console.log(resData);
  	        	} catch (err) {
  	        	  console.log(err.message);
@@ -154,8 +177,8 @@
 		function getValues(){
 			var values = mplayer.getValueSlider();
             console.log(values);
-			document.getElementById('Start').value=videojs.round(values.start,2);
-			document.getElementById('End').value=videojs.round(values.end,2);
+			document.getElementById('Start').value=videojs.round(values.start,0);
+			document.getElementById('End').value=videojs.round(values.end, 0);
 		}
 		
 		function showhide(){

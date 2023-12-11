@@ -14,4 +14,8 @@ public class ThreadBO {
 		thread.setCategoryId(categoryId);
 		threadDao.save(thread);
 	}
+	
+	public Thread getDetail(String id) {
+		return threadDao.getDetail(id);
+	}
 }

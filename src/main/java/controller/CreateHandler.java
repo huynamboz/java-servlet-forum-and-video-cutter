@@ -14,10 +14,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import model.bo.CategoryBO;
 import model.bean.Category;
+import model.bean.User;
 import model.bo.ThreadBO;
 /**
  * Servlet implementation class CreateHandler
@@ -40,9 +42,16 @@ public class CreateHandler extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// Fetch data (replace this with your data retrieval logic)
-        Category[] data = categoryBO.getListCategories(); // Replace this with actual data retrieval logic
+
+		HttpSession session = request.getSession();
+    	User user = (User)session.getAttribute("me");
+    	
+    	if (user == null) {
+    		RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+            dispatcher.forward(request, response);
+    	};
+    	
+        Category[] data = categoryBO.getListCategories();
 
         // Set the data as an attribute in the request
         request.setAttribute("myData", data);

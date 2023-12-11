@@ -17,7 +17,7 @@
  	
     <div class="header">
 		<div class="flex gap-2 items-center">
-			<p class="font-bold text-lg">FORUMZ</p>
+			<a href="/forum" class="font-bold text-lg">FORUMZ</a>
 			<div class="ml-5">
 				<p>Trang chủ</p>
 			</div>
