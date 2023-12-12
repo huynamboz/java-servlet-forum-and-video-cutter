@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page import="model.bean.User"%>
 <html>
@@ -17,7 +18,7 @@
  	
     <div class="header">
 		<div class="flex gap-2 items-center">
-			<a href="/forum" class="font-bold text-lg">FORUMZ</a>
+			<a href="/forum/home" class="font-bold text-lg">FORUMZ</a>
 			<div class="ml-5">
 				<p>Trang chủ</p>
 			</div>
@@ -52,64 +53,34 @@
 				
 				<div class="category-post__list flex flex-col gap-2">
 					
-					<div class="flex gap-2 p-2 border-b-[1px]">
-						<img class="avatar-second"	 src="https://data.voz.vn/avatars/s/1809/1809531.jpg?1653477151" alt="avatar"/>
-						<div class="flex flex-col gap-1">
-							<p><span class="post-type-discuss">
-								Thảo luận
-							</span>
-							Review mua ốp lưng/ kính cường lực cho điện thoại (iphone) trên thương mại điện tử</p>
-							<p>
-								<span class="text-[var(--gray-second)]">46 minutes</span>
-								<span>Trịnh Huy Nam</span>
-							</p>
-						</div>
-						
-						<div class="ml-auto flex flex-col items-center">
-							<p class="text-[var(--gray-second)]">Comments</p>
-							<p>20</p>
-						</div>
-					</div>
 					
 					
-					<div class="flex gap-2 p-2 border-b-[1px]">
-						<img class="avatar-second"	 src="https://data.voz.vn/avatars/s/1809/1809531.jpg?1653477151" alt="avatar"/>
-						<div class="flex flex-col gap-1">
-							<p><span class="post-type-discuss">
-								Thảo luận
-							</span>
-							Review mua ốp lưng/ kính cường lực cho điện thoại (iphone) trên thương mại điện tử</p>
-							<p>
-								<span class="text-[var(--gray-second)]">46 minutes</span>
-								<span>Trịnh Huy Nam</span>
-							</p>
+					<c:forEach var="item" items="${myData}">
+	                    <div class="flex gap-2 p-2 border-b-[1px]">
+							<img class="avatar-second"	 src="${item.getUser('avatar')}" alt="avatar"/>
+							<div class="flex flex-col gap-1">
+								<a href="/forum/detail?id=${item.getId()}"><span class="post-type-discuss">
+									${item.getCategoryName()}
+								</span>
+								${item.getTitle()}</a>
+								<p>
+									<span class="text-[var(--gray-second)]">${item.getCreatedAt()}</span>
+									<span>${item.getUser('name')}</span>
+								</p>
+							</div>
+							
+							<div class="ml-auto flex flex-col items-center">
+								<p class="text-[var(--gray-second)]">Comments</p>
+								<p>20</p>
+							</div>
 						</div>
-						
-						<div class="ml-auto flex flex-col items-center">
-							<p class="text-[var(--gray-second)]">Comments</p>
-							<p>20</p>
-						</div>
-					</div>
+	                </c:forEach>
 					
 					
-					<div class="flex gap-2 p-2 border-b-[1px]">
-						<img class="avatar-second"	 src="https://data.voz.vn/avatars/s/1809/1809531.jpg?1653477151" alt="avatar"/>
-						<div class="flex flex-col gap-1">
-							<p><span class="post-type-discuss">
-								Thảo luận
-							</span>
-							Review mua ốp lưng/ kính cường lực cho điện thoại (iphone) trên thương mại điện tử</p>
-							<p>
-								<span class="text-[var(--gray-second)]">46 minutes</span>
-								<span>Trịnh Huy Nam</span>
-							</p>
-						</div>
-						
-						<div class="ml-auto flex flex-col items-center">
-							<p class="text-[var(--gray-second)]">Comments</p>
-							<p>20</p>
-						</div>
-					</div>
+					
+					
+					
+					
 				
 				</div>
 				

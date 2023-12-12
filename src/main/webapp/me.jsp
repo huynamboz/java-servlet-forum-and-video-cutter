@@ -59,7 +59,7 @@
 	<div>
 		<div class="header">
 			<div class="flex gap-2 items-center">
-				<a href="/forum" class="font-bold text-lg">FORUMZ</a>
+				<a href="/forum/home" class="font-bold text-lg">FORUMZ</a>
 				<div class="ml-5">
 					<p>Trang chủ</p>
 				</div>

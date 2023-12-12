@@ -20,6 +20,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import javax.el.ELException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -75,7 +76,7 @@ public class TrimVideo extends HttpServlet {
     }
     
     private void processRequest(HttpServletRequest request) throws IOException {
-    	
+        WorkerBO workerBo = new WorkerBO();
     	
     	String id = request.getAttribute("id").toString();
     	
@@ -100,10 +101,31 @@ public class TrimVideo extends HttpServlet {
               "-t", endTime,
               outputFilePath
     	};
-
+    	
+    	String[] cmdHaveMute = {
+                ffmpegCommand,
+                "-ss", startTime,
+                "-i", inputFilePath,
+                "-c", "copy",
+                "-t", endTime, "-an",
+                outputFilePath
+      	};
+    	
+    	Boolean isMute = false;
+    	String mute = request.getParameter("isMute");
+    	if (mute != null && mute.equals("on")) {
+    		
+    		isMute = true;
+    	}
+    	Process p;
 //		String cmd= "\"C:\\ffmpeg\\bin\\ffmpeg\" -nostdin -ss 00:00:01.0 -i \"C:\\Users\\teahu\\Videos\\testmp42.mp4\" -c copy -t 00:00:50.0 \"C:\\Users\\teahu\\Videos\\test4.mp4\""; 
-		System.out.println(cmd);
-		Process p = Runtime.getRuntime().exec(cmd);
+		System.out.println(isMute);
+		if (isMute == true) {
+			p = Runtime.getRuntime().exec(cmdHaveMute);
+		} else {
+			p = Runtime.getRuntime().exec(cmd);
+		}
+		
 		 System.out.print("converting");
        try {
 			while ( ! p.waitFor(500, TimeUnit.MILLISECONDS)) {
@@ -113,12 +135,15 @@ public class TrimVideo extends HttpServlet {
 		} catch (InterruptedException e) {
 
 			e.printStackTrace();
+        	workerBo.update(id, "error");
 		}
       
        System.out.print("\n");
 
        if (p.exitValue() != 0) {
                System.err.printf("ffmpeg failed with value %d\n", p.exitValue());
+
+           		workerBo.update(id, "error");
                return;
        }
        
@@ -153,12 +178,28 @@ public class TrimVideo extends HttpServlet {
                 // Get the URL of the uploaded video
                 String publicUrl = (String) uploadResult.get("url");
                 System.out.println("url: " + publicUrl);
-                fileProcessed.delete();
-                WorkerBO workerBo = new WorkerBO();
+
+                
             	workerBo.update(id, publicUrl);
             	
+            	File outFile = new File(outputFilePath);
+            	if (outFile.delete()) { 
+                    System.out.println("Deleted the folder: " + outFile.getName());
+                  } else {
+                    System.out.println("Failed to delete the folder.");
+                  } 
+
+                File inpFile = new File(inputFilePath);
+	            if (inpFile.delete()) { 
+	                System.out.println("Deleted the folder: " + inpFile.getName());
+	              } else {
+	                System.out.println("Failed to delete the folder.");
+	              } 
+                
+	            
             } catch (Exception e) {
                e.printStackTrace();
+           		workerBo.update(id, "error");
             }
     }
     
@@ -207,9 +248,9 @@ public class TrimVideo extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		 WorkerBO workerBo = new WorkerBO();
 		 InputStream videoInputStream = null;
-		 
+		 String newFileName = "";
 		 try {
 	            Part videoPart = request.getPart("videoFile");
 
@@ -218,7 +259,7 @@ public class TrimVideo extends HttpServlet {
 	            
 	            String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
 	            
-	            String newFileName = UUID.randomUUID().toString() + extension;
+	            newFileName = UUID.randomUUID().toString() + extension;
 	            
 	            videoInputStream = videoPart.getInputStream();
 
@@ -229,9 +270,6 @@ public class TrimVideo extends HttpServlet {
 	            request.setAttribute("id", newFileName);
 	            
 	            request.setAttribute("ext", extension);
-	            
-	            WorkerBO workerBo = new WorkerBO();
-	            
 
 	        	HttpSession session = request.getSession();
 	        	
@@ -254,6 +292,8 @@ public class TrimVideo extends HttpServlet {
 	            
 	        } catch (Exception e) {
 	            System.out.println(e);
+	              
+	           	workerBo.update(newFileName, "error");
 	        }finally {
 	        	response.setContentType("text/plain");
 	        	response.getWriter().print("responseData"); //----Sending response
@@ -263,6 +303,7 @@ public class TrimVideo extends HttpServlet {
 	                	videoInputStream.close();
 	                } catch (IOException io) {
 	                	 System.out.println(io);
+	                	 workerBo.update(newFileName, "error");
 	                }
 	            }
 	        }

@@ -22,6 +22,10 @@ public class UserBO {
 		return user;
 	}
 	
+	public User[] getList() {
+		return userDao.getListUser();
+	}
+	
 	public void UpdateInfo(String username, String name, String avatar, String password) {
 		User user = new User();
 		user.setUsername(username);

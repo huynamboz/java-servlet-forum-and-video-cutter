@@ -37,7 +37,7 @@ public class LoginHandler extends HttpServlet {
         		HttpSession session = request.getSession();
         		session.setAttribute("id", user.get().getId());
         		session.setAttribute("me", user.get());
-        		response.sendRedirect("index.jsp");
+        		response.sendRedirect("/forum/editor");
         	}
         	else {
         		String errorMessage = "Wrong password!";

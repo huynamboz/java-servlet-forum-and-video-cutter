@@ -14,6 +14,15 @@ public class Thread {
 	
 	private String createdAt;
 	
+	private String category_name;
+	
+	public String getCategoryName() {
+		return this.category_name;
+	}
+	public void setCategoryName(String v) {
+		this.category_name = v;
+	}
+	
 	public void setCreatedAt(String v) {
 		this.createdAt = v;
 	}
